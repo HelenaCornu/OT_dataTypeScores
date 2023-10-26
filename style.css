@@ -1,0 +1,57 @@
+  caption {
+    text-align: left;
+    font-size: 2rem;
+    font-family: Overpass;
+    font-weight:bold;
+    color: #1a4565;
+    margin-bottom: 1rem;
+    height: 50px;
+  }
+
+  table {
+    border-collapse: collapse;
+    border: 2px solid; 
+    border-color:#f5f5f5;
+    margin: 25px auto;
+    font-size: 1.125rem;
+    font-family: Roboto;
+    color: #1a4565;
+    width: 80%;
+  }
+
+  th, td {
+    border: 2px solid; 
+    border-color:#f5f5f5;
+    padding: 15px;
+    align: left;
+  }
+
+  th {
+    font-size: 1rem;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .closed:after {
+    content: '\02795';
+    font-size: 1.125rem;
+    font-family: Roboto;
+    color: #3489ca;
+  }
+
+  .open:after {
+    content: '\02796';
+    font-size: 1.125rem;
+    font-family: Roboto;
+    color: #3489ca;
+  }
+
+  .chartcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    gap: 100px;
+  }

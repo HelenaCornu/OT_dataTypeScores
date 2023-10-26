@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OT Platform data table</title>
+    <!-- This is the CSS reset-->
+    <link rel="stylesheet" href="cssreset.css" />
+    <!-- Installing Chart.js from jsdelivr -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Loading the required Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;500&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <!-- This is my own stylesheet-->
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <table>
+        <caption>Genes associated with lung carcinoma</caption>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Symbol</th>
+                <th>Gene ID</th>
+                <th>Gene Name</th>
+                <th>Overall Association Score</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td><button id="table-btn" class = "closed"></button></td>
+                <td>EGFR</td>
+                <td>ENSG00000143614</td>
+                <td>epidermal growth factor receptor</td>
+                <td>1.0</td>
+            </tr>
+            <tr class = "hide" id = "graph-drawer" >
+                <td colspan = "5">
+                    <div class = "chartcontainer">
+                    <canvas id="bar-chart"></canvas>
+                    <canvas id="radar-chart"></canvas>
+                </div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>SMAD2</td>
+                <td>ENSG00000175387</td>
+                <td>SMAD family member 2</td>
+                <td>0.795385609949128</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>TGFBR2</td>
+                <td>ENSG00000163513</td>
+                <td>transforming growth factor beta receptor 2</td>
+                <td>0.7867312254055623</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>TNFRSF10C</td>
+                <td>ENSG00000173535</td>
+                <td>TNF receptor superfamily member 10c
+                </td>
+                <td>0.6378002776688643</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>GATAD2B</td>
+                <td>ENSG00000143614</td>
+                <td>GATA zinc finger domain containing 2B</td>
+                <td>0.637625</td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="./script.js"></script> 
+</body>
+</html>
