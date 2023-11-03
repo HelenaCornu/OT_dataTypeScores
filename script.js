@@ -14,6 +14,88 @@ function handleTableToggle() {
   };
 }
 
+// axios.post('https://api.platform.opentargets.org/api/v4/graphql', {
+//   query: `{
+//     disease(efoId: "EFO_0001071") {
+//     associatedTargets{
+//       rows{
+//         target {
+//           approvedSymbol
+//           id
+//           approvedName
+//         }
+//         score
+//         datasourceScores {
+//           id
+//           score
+//         }
+//       }
+//     }
+//   }
+// }`
+// }).then((result) => {
+//   console.log(
+//     result.data.disease.associatedTargets.rows[0].target.approvedName);
+// });
+
+function getData() {
+  // Getting the data from the OT Platform API as a post request, .then ensures that you only proceed once you have the data
+  axios
+    .post("https://api.platform.opentargets.org/api/v4/graphql", {
+      query: `{
+    disease(efoId: "EFO_0001071") {
+    associatedTargets{
+      rows{
+        target {
+          approvedSymbol
+          id
+          approvedName
+        }
+        score
+        datasourceScores {
+          id
+          score
+        }
+      }
+    }
+  }
+}`,
+    })
+    // Getting only the data we need
+    .then((result) => {
+      console.log(result.data.data.disease.associatedTargets.rows);
+      let rawElements = result.data.data.disease.associatedTargets.rows;
+
+      // Cutting down the number of responses. Can modify -- set to five for testing
+      rawElements = rawElements.splice(0, 5);
+
+      // Adding the data into the rows
+      let tableContent = "";
+      let tableContainer = document.querySelector("#table-rows");
+
+      for (let i = 0; i < rawElements.length; i++) {
+        let currentElement = rawElements[i];
+        let tableTemplate = `<tr>
+        <td><button id="table-btn" class = "closed"></button></td>
+        <td>${currentElement.target.approvedSymbol}</td>
+        <td>${currentElement.target.id}</td>
+        <td>${currentElement.target.approvedName}</td>
+        <td>${currentElement.score}</td>
+    </tr>
+    <tr class = "hide" id = "graph-drawer" >
+        <td colspan = "5">
+            <div class = "chartcontainer">
+            <canvas id="bar-chart"></canvas>
+            <canvas id="radar-chart"></canvas>
+        </div>
+        </td>
+    </tr>`;
+        tableContent = tableContent + tableTemplate;
+      }
+      tableContainer.innerHTML = tableContent;
+    });
+}
+
 function initCharts() {
   const data = {
     labels: [
@@ -96,8 +178,9 @@ function initCharts() {
 }
 
 function startApp() {
-  handleTableToggle();
-  initCharts();
+  // handleTableToggle();
+  getData();
+  // initCharts();
 }
 
 startApp();
