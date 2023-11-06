@@ -190,8 +190,4 @@ function getData() {
     }); // end of .then
 } // end of getData function
 
-function startApp() {
-  getData();
-}
-
-startApp();
+getData();
