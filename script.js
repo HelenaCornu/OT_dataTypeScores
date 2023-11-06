@@ -23,11 +23,10 @@ function getData() {
     })
     // Getting only the data we need
     .then((result) => {
-      console.log(result.data.data.disease.associatedTargets.rows);
       rawElements = result.data.data.disease.associatedTargets.rows;
+      console.log(rawElements);
 
-      // Cutting down the number of responses. Can modify -- set to five for testing
-      rawElements = rawElements.splice(0, 10);
+      // rawElements = rawElements.splice(0, 10);
 
       // Adding the data into the rows
       let tableContent = "";
@@ -37,14 +36,17 @@ function getData() {
 
       for (let i = 0; i < rawElements.length; i++) {
         let currentElement = rawElements[i];
+        currentElement.datasourceScores.sort((a, b) => (a.id > b.id ? 1 : -1));
 
         //adding data to the table -- to test I have removed class=hide from the graph drawer
         let tableTemplate = `<tr>
-        <td><button id="table-btn-${currentElement.target.id}" class = "closed"></button></td>
+        <td><button id="table-btn-${
+          currentElement.target.id
+        }" class = "closed"></button></td>
         <td>${currentElement.target.approvedSymbol}</td>
         <td>${currentElement.target.id}</td>
         <td>${currentElement.target.approvedName}</td>
-        <td>${currentElement.score}</td>
+        <td>${currentElement.score.toFixed(3)}</td>
     </tr>
     <tr class = "hide" id = "graph-drawer-${currentElement.target.id}" >
         <td colspan = "5">
