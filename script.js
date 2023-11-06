@@ -28,6 +28,65 @@ function getData() {
 
       // rawElements = rawElements.splice(0, 10);
 
+      const importOrder = [
+        "ot_genetics_portal",
+        "eva",
+        "gene_burden",
+        "genomics_england",
+        "gene2Phenotype",
+        "uniprot_literature",
+        "uniprot_variants",
+        "orphanet",
+        "clingen",
+        "cancer_gene_census",
+        "intogen",
+        "eva_somatic",
+        "cancer_biomarkers",
+        "chembl",
+        "crispr_screen",
+        "crispr",
+        "slapenrich",
+        "progeny",
+        "reactome",
+        "sysbio",
+        "europepmc",
+        "expression_atlas",
+        "impc",
+      ];
+
+      const sortByObject = importOrder.reduce((obj, item, index) => {
+        return {
+          ...obj,
+          [item]: index,
+        };
+      }, {});
+
+      let colours = {
+        ot_genetics_portal: "rgb(88, 139, 139)",
+        eva: "rgb(88, 139, 139)",
+        gene_burden: "rgb(88, 139, 139)",
+        genomics_england: "rgb(88, 139, 139)",
+        gene2Phenotype: "rgb(88, 139, 139)",
+        uniprot_literature: "rgb(88, 139, 139)",
+        uniprot_variants: "rgb(88, 139, 139)",
+        orphanet: "rgb(88, 139, 139)",
+        clingen: "rgb(88, 139, 139)",
+        cancer_gene_census: "rgb(246, 246, 246)",
+        intogen: "rgb(246, 246, 246)",
+        eva_somatic: "rgb(246, 246, 246)",
+        cancer_biomarkers: "rgb(246, 246, 246)",
+        chembl: "rgb(255, 213, 194)",
+        crispr_screen: "rgb(242, 143, 59)",
+        crispr: "rgb(242, 143, 59)",
+        slapenrich: "rgb(242, 143, 59)",
+        progeny: "rgb(242, 143, 59)",
+        reactome: "rgb(242, 143, 59)",
+        sysbio: "rgb(242, 143, 59)",
+        europepmc: "rgb(200, 85, 61)",
+        expression_atlas: "rgb(45, 48, 71)",
+        impc: "rgb(147, 183, 190)",
+      };
+
       // Adding the data into the rows
       let tableContent = "";
       let tableContainer = document.querySelector("#table-rows");
@@ -36,7 +95,9 @@ function getData() {
 
       for (let i = 0; i < rawElements.length; i++) {
         let currentElement = rawElements[i];
-        currentElement.datasourceScores.sort((a, b) => (a.id > b.id ? 1 : -1));
+        currentElement.datasourceScores.sort(
+          (a, b) => sortByObject[a.id] - sortByObject[b.id]
+        );
 
         //adding data to the table -- to test I have removed class=hide from the graph drawer
         let tableTemplate = `<tr>
@@ -69,6 +130,7 @@ function getData() {
             targetID: `${currentElement.target.id}`,
             datasourceList: [],
             datasourceScoreList: [],
+            backgroundColour: [],
           },
         };
 
@@ -78,6 +140,9 @@ function getData() {
           );
           targetScores["newRow"]["datasourceScoreList"].push(
             currentElement.datasourceScores[j].score
+          );
+          targetScores["newRow"]["backgroundColour"].push(
+            colours[currentElement.datasourceScores[j].id]
           );
         } //end of nested for loop
 
@@ -98,6 +163,7 @@ function getData() {
               {
                 label: "Data Type Scores",
                 data: graphData[k].newRow.datasourceScoreList,
+                backgroundColor: graphData[k].newRow.backgroundColour,
               },
             ],
           };
@@ -129,7 +195,7 @@ function getData() {
                   },
                 },
               },
-              backgroundColor: ["rgb(52, 137, 202)"],
+              // backgroundColor: ["rgb(52, 137, 202)"],
             }
           ); // end of bar chart
 
@@ -193,3 +259,24 @@ function getData() {
 } // end of getData function
 
 getData();
+
+// ["rgb(88, 139, 139)"][ // Genetic association
+//   // otGeneticsPortal	eva	geneBurden	genomicsEngland	gene2Phenotype	uniprotLiterature	uniprotVariants	orphanet	clingen
+//   "rgb(246, 246, 246)"
+// ][ // Somatic mutations
+//   // cancerGeneCensus	intogen	evaSomatic	cancerBiomarkers
+//   "rgb(255, 213, 194)"
+// ][ // Known Drug
+//   // chembl
+//   "rgb(242, 143, 59)"
+// ][ // Affected Pathway
+//   //crisprScreen	crispr	slapenrich	progeny	reactome	sysbio
+//   "rgb(200, 85, 61)"
+// ][ // Literature
+//   //europepmc
+//   "rgb(45, 48, 71)"
+// ][ // RNA expression
+//   //expressionAtlas
+//   "rgb(147, 183, 190)"
+// ]; // Animal Model
+// //impc
